@@ -3,7 +3,7 @@
 To experiment with this code you'll have to clone the repository:
 
 ```bash
-git clone https://github.com/cabamarcos/GANs_MNIST.git
+git clone https://github.com/cabamarcos/GANs_VA.git
 ```
 
 Then download the requirements:
