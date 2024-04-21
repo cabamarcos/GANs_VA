@@ -18,6 +18,6 @@ First of all I created a simple fully connected PM which gave me results like th
 After some experiments with the learning rate and updating the data normalization values, it looked like this
 ![alt text](images/image-1.png)
 
-As you can see they look better now but they can be improved so much.
+As you can see they look better now but they can be improved so much but they don't improve a lot if you let them train for much more time.
 
 After all I wanted to learn (this is my first implementation) so I wanted to try what it would look like if I made a CNN. (TODO)
