@@ -6,7 +6,7 @@ import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter  # to print to tensorboard
-from Model import Discriminator, Generator, initialize_weights
+from DCGAN import Discriminator, Generator, initialize_weights
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
