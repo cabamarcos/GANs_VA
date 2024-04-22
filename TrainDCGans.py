@@ -15,7 +15,7 @@ LEARNING_RATE = 2e-4  # could also use two lrs, one for gen and one for disc
 BATCH_SIZE = 128
 IMAGE_SIZE = 64
 CHANNELS_IMG = 1
-NOISE_DIM = 100
+Z_DIM = 100
 NUM_EPOCHS = 5
 FEATURES_DISC = 64
 FEATURES_GEN = 64
@@ -25,8 +25,7 @@ transforms = transforms.Compose(
         transforms.Resize(IMAGE_SIZE),
         transforms.ToTensor(),
         transforms.Normalize(
-            [0.5 for _ in range(CHANNELS_IMG)], [0.5 for _ in range(CHANNELS_IMG)]
-        ),
+            [0.5 for _ in range(CHANNELS_IMG)], [0.5 for _ in range(CHANNELS_IMG)]),
     ]
 )
 
@@ -38,7 +37,7 @@ dataset = datasets.MNIST(
 # comment mnist above and uncomment below if train on CelebA
 # dataset = datasets.ImageFolder(root="celeb_dataset", transform=transforms)
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
-gen = Generator(NOISE_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
+gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
 disc = Discriminator(CHANNELS_IMG, FEATURES_DISC).to(device)
 initialize_weights(gen)
 initialize_weights(disc)
@@ -47,7 +46,7 @@ opt_gen = optim.Adam(gen.parameters(), lr=LEARNING_RATE, betas=(0.5, 0.999))
 opt_disc = optim.Adam(disc.parameters(), lr=LEARNING_RATE, betas=(0.5, 0.999))
 criterion = nn.BCELoss()
 
-fixed_noise = torch.randn(32, NOISE_DIM, 1, 1).to(device)
+fixed_noise = torch.randn(32, Z_DIM, 1, 1).to(device)
 writer_real = SummaryWriter(f"logs/real")
 writer_fake = SummaryWriter(f"logs/fake")
 step = 0
@@ -59,17 +58,17 @@ for epoch in range(NUM_EPOCHS):
     # Target labels not needed! <3 unsupervised
     for batch_idx, (real, _) in enumerate(dataloader):
         real = real.to(device)
-        noise = torch.randn(BATCH_SIZE, NOISE_DIM, 1, 1).to(device)
+        noise = torch.randn(BATCH_SIZE, Z_DIM, 1, 1).to(device)
         fake = gen(noise)
 
         ### Train Discriminator: max log(D(x)) + log(1 - D(G(z)))
         disc_real = disc(real).reshape(-1)
         loss_disc_real = criterion(disc_real, torch.ones_like(disc_real))
-        disc_fake = disc(fake.detach()).reshape(-1)
+        disc_fake = disc(fake).reshape(-1)
         loss_disc_fake = criterion(disc_fake, torch.zeros_like(disc_fake))
         loss_disc = (loss_disc_real + loss_disc_fake) / 2
         disc.zero_grad()
-        loss_disc.backward()
+        loss_disc.backward(retain_graph=True)
         opt_disc.step()
 
         ### Train Generator: min log(1 - D(G(z))) <-> max log(D(G(z))
