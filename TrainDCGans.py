@@ -10,6 +10,7 @@ from DCGAN import Discriminator, Generator, initialize_weights
 
 # Hyperparameters etc.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(device)
 LEARNING_RATE = 2e-4  # could also use two lrs, one for gen and one for disc
 BATCH_SIZE = 128
 IMAGE_SIZE = 64
