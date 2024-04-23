@@ -27,7 +27,7 @@ After all I wanted to learn (this is my first implementation) so I wanted to try
 
 I then searched for information that could help me to create a DCGAN, which is the GAN showed in the notebook:
 
-![alt text](images/dcgan_generator.png)
+![alt text](Images/dcgan_generator.png)
 
 I found the [paper](https://arxiv.org/abs/1511.06434) that explains how to make it and some experiments.
 
@@ -35,4 +35,8 @@ After reading and understanding it I created the [document](./DCGAN.py) that con
 
 In this other [document](./TrainDCGans.py) I crated the code necessary to train the model. After 5 epochs, the generated images of the MNIST dataset look like this:
 
-![alt text](images/image-2.png)
+![alt text](Images/image-2.png)
+
+## TO DO
+
+The next thing I am working on is using the famous_dataset, which contains pictures of famous people, to try to generate some images of fake people.
