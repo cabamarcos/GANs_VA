@@ -37,6 +37,8 @@ In this other [document](./TrainDCGans.py) I crated the code necessary to train 
 
 ![alt text](Images/image-2.png)
 
+After 15 epoch, the imahges dom't look better. In fact, some of the pixels start disappearing. I will train it more to see how time affects the creation of images.
+
 ## TO DO
 
 The next thing I am working on is using the famous_dataset, which contains pictures of famous people, to try to generate some images of fake people.
