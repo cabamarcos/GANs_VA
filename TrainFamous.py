@@ -11,7 +11,7 @@ from DCGAN import Discriminator, Generator, initialize_weights
 # Hyperparameters etc.
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
-LEARNING_RATE = 1e-4  # could also use two lrs, one for gen and one for disc
+LEARNING_RATE = 2e-4  # could also use two lrs, one for gen and one for disc
 BATCH_SIZE = 128
 IMAGE_SIZE = 64
 CHANNELS_IMG = 3
@@ -31,6 +31,8 @@ transforms = transforms.Compose(
 
 
 dataset = datasets.ImageFolder(root="celeb_dataset", transform=transforms)
+
+
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
 disc = Discriminator(CHANNELS_IMG, FEATURES_DISC).to(device)
