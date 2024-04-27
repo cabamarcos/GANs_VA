@@ -40,7 +40,7 @@ In this other [document](./TrainDCGans.py) I crated the code necessary to train 
 
 ![alt text](Images/image-2.png)
 
-After 15 epoch, the imahges dom't look better. In fact, some of the pixels start disappearing. I will train it more to see how time affects the creation of images.
+After 15 epoch, the images don't look better. In fact, some of the pixels start disappearing. I will train it more to see how time affects the creation of images.
 
 ## TO DO
 
