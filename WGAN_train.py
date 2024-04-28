@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-from utils import gradient_penalty, save_checkpoint, load_checkpoint
+#from utils import gradient_penalty, save_checkpoint, load_checkpoint
 from WGAN import Discriminator, Generator, initialize_weights
 
 # Hyperparameters etc.
@@ -17,7 +17,7 @@ BATCH_SIZE = 64
 IMAGE_SIZE = 64
 CHANNELS_IMG = 3
 Z_DIM = 128
-NUM_EPOCHS = 5
+NUM_EPOCHS = 25
 FEATURES_CRITIC = 64
 FEATURES_GEN = 64
 CRITIC_ITERATIONS = 5
