@@ -42,6 +42,18 @@ In this other [document](./TrainDCGans.py) I crated the code necessary to train 
 
 After 15 epoch, the images don't look better. In fact, some of the pixels start disappearing. I will train it more to see how time affects the creation of images.
 
-## TO DO
+### CelebA dataset
 
-The next thing I am working on is using the famous_dataset, which contains pictures of famous people, to try to generate some images of fake people.
+Afer trying numerous times generating images of people I kept failing. I don't know why I kept failing so I decided to try other implementations or other ways of training.
+
+## WGAN
+
+I found another [paper](https://arxiv.org/pdf/1701.07875) which explained the implementation of this GAN and the new way of training.
+
+It basicly trains the discriminator 5 more times than the generator. 
+
+I got results like this after 5 epochs:
+
+![alt text](./Images/image_wgan.png)
+
+In this images you can clearly see some faces forming, I will let this model train for longer so we can get better results.
