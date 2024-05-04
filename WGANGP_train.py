@@ -12,14 +12,14 @@ from WGAN import Discriminator, Generator, initialize_weights
 
 # Hyperparameters etc.
 device = "cuda" if torch.cuda.is_available() else "cpu"
-LEARNING_RATE = 5e-5
+LEARNING_RATE = 1e-4
 BATCH_SIZE = 64
 IMAGE_SIZE = 64
 CHANNELS_IMG = 3
-Z_DIM = 128
-NUM_EPOCHS = 25
-FEATURES_CRITIC = 64
-FEATURES_GEN = 64
+Z_DIM = 100
+NUM_EPOCHS = 100
+FEATURES_CRITIC = 16
+FEATURES_GEN = 16
 CRITIC_ITERATIONS = 5
 LAMBDA_GP = 10
 
@@ -33,10 +33,16 @@ transforms = transforms.Compose(
     ]
 )
 
+#dataset = datasets.MNIST(root="dataset/", transform=transforms, download=True)
 dataset = datasets.ImageFolder(root="celeb_dataset", transform=transforms)
-loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+loader = DataLoader(
+    dataset,
+    batch_size=BATCH_SIZE,
+    shuffle=True,
+)
 
-# initialize gen and disc/critic
+# initialize gen and disc, note: discriminator should be called critic,
+# according to WGAN paper (since it no longer outputs between [0, 1])
 gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
 critic = Discriminator(CHANNELS_IMG, FEATURES_CRITIC).to(device)
 initialize_weights(gen)
@@ -48,8 +54,8 @@ opt_critic = optim.Adam(critic.parameters(), lr=LEARNING_RATE, betas=(0.0, 0.9))
 
 # for tensorboard plotting
 fixed_noise = torch.randn(32, Z_DIM, 1, 1).to(device)
-writer_real = SummaryWriter(f"logs/real")
-writer_fake = SummaryWriter(f"logs/fake")
+writer_real = SummaryWriter(f"logs/GAN_MNIST/real")
+writer_fake = SummaryWriter(f"logs/GAN_MNIST/fake")
 step = 0
 
 gen.train()
@@ -58,16 +64,17 @@ critic.train()
 for epoch in range(NUM_EPOCHS):
     # Target labels not needed! <3 unsupervised
     for batch_idx, (data, _) in enumerate(tqdm(loader)):
-        data = data.to(device)
-        cur_batch_size = data.shape[0]
+        real = data.to(device)
+        cur_batch_size = real.shape[0]
 
         # Train Critic: max E[critic(real)] - E[critic(fake)]
+        # equivalent to minimizing the negative of that
         for _ in range(CRITIC_ITERATIONS):
             noise = torch.randn(cur_batch_size, Z_DIM, 1, 1).to(device)
             fake = gen(noise)
-            critic_real = critic(data).reshape(-1)
+            critic_real = critic(real).reshape(-1)
             critic_fake = critic(fake).reshape(-1)
-            gp = gradient_penalty(critic, data, fake, device=device)
+            gp = gradient_penalty(critic, real, fake, device=device)
             loss_critic = (
                 -(torch.mean(critic_real) - torch.mean(critic_fake)) + LAMBDA_GP * gp
             )
@@ -84,26 +91,18 @@ for epoch in range(NUM_EPOCHS):
 
         # Print losses occasionally and print to tensorboard
         if batch_idx % 100 == 0 and batch_idx > 0:
-            gen.eval()
-            critic.eval()
             print(
                 f"Epoch [{epoch}/{NUM_EPOCHS}] Batch {batch_idx}/{len(loader)} \
                   Loss D: {loss_critic:.4f}, loss G: {loss_gen:.4f}"
             )
 
             with torch.no_grad():
-                fake = gen(noise)
+                fake = gen(fixed_noise)
                 # take out (up to) 32 examples
-                img_grid_real = torchvision.utils.make_grid(
-                    data[:32], normalize=True
-                )
-                img_grid_fake = torchvision.utils.make_grid(
-                    fake[:32], normalize=True
-                )
+                img_grid_real = torchvision.utils.make_grid(real[:32], normalize=True)
+                img_grid_fake = torchvision.utils.make_grid(fake[:32], normalize=True)
 
                 writer_real.add_image("Real", img_grid_real, global_step=step)
                 writer_fake.add_image("Fake", img_grid_fake, global_step=step)
 
             step += 1
-            gen.train()
-            critic.train()

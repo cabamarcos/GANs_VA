@@ -4,8 +4,8 @@ import torch.nn as nn
 
 def gradient_penalty(critic, real, fake, device="cpu"):
     BATCH_SIZE, C, H, W = real.shape
-    alpha = torch.rand((BATCH_SIZE, 1, 1, 1)).repeat(1, C, H, W).to(device)
-    interpolated_images = real * alpha + fake * (1 - alpha)
+    epsilon = torch.rand((BATCH_SIZE, 1, 1, 1)).repeat(1, C, H, W).to(device)
+    interpolated_images = real * epsilon + fake * (1 - epsilon)
 
     # Calculate critic scores
     mixed_scores = critic(interpolated_images)
