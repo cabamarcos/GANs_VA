@@ -58,4 +58,4 @@ I got results like this after 5 epochs:
 
 In this images you can clearly see some faces forming, I will let this model train for longer so we can get better results.
 
-After training for 25 epochs, the results don't get better, so I will tey to use a different method
+After training for 25 epochs, the results don't get better, so I will try to use a different method
