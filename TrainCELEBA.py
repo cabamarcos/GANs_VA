@@ -23,7 +23,7 @@ FEATURES_GEN = 64
 
 transforms = transforms.Compose(
     [
-        transforms.Resize(IMAGE_SIZE),
+        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
         transforms.ToTensor(),
         transforms.Normalize(
             [0.5 for _ in range(CHANNELS_IMG)], [0.5 for _ in range(CHANNELS_IMG)]
@@ -73,27 +73,27 @@ for epoch in range(NUM_EPOCHS):
         loss_disc.backward()
         opt_disc.step()
 
-    ### Train Generator: min log(1 - D(G(z))) <-> max log(D(G(z))
-    output = disc(fake).reshape(-1)
-    loss_gen = criterion(output, torch.ones_like(output))
-    gen.zero_grad()
-    loss_gen.backward()
-    opt_gen.step()
+        ### Train Generator: min log(1 - D(G(z))) <-> max log(D(G(z))
+        output = disc(fake).reshape(-1)
+        loss_gen = criterion(output, torch.ones_like(output))
+        gen.zero_grad()
+        loss_gen.backward()
+        opt_gen.step()
 
-    # Print losses occasionally and print to tensorboard
-    if batch_idx % 100 == 0:
-        print(
-            f"Epoch [{epoch}/{NUM_EPOCHS}] Batch {batch_idx}/{len(dataloader)} \
-                Loss D: {loss_disc:.4f}, loss G: {loss_gen:.4f}"
-        )
+        # Print losses occasionally and print to tensorboard
+        if batch_idx % 100 == 0:
+            print(
+                f"Epoch [{epoch}/{NUM_EPOCHS}] Batch {batch_idx}/{len(dataloader)} \
+                  Loss D: {loss_disc:.4f}, loss G: {loss_gen:.4f}"
+            )
 
-        with torch.no_grad():
-            fake = gen(fixed_noise)
-            # take out (up to) 32 examples
-            img_grid_real = torchvision.utils.make_grid(real[:32], normalize=True)
-            img_grid_fake = torchvision.utils.make_grid(fake[:32], normalize=True)
+            with torch.no_grad():
+                fake = gen(fixed_noise)
+                # take out (up to) 32 examples
+                img_grid_real = torchvision.utils.make_grid(real[:32], normalize=True)
+                img_grid_fake = torchvision.utils.make_grid(fake[:32], normalize=True)
 
-            writer_real.add_image("Real", img_grid_real, global_step=step)
-            writer_fake.add_image("Fake", img_grid_fake, global_step=step)
+                writer_real.add_image("Real", img_grid_real, global_step=step)
+                writer_fake.add_image("Fake", img_grid_fake, global_step=step)
 
-        step += 1
+            step += 1
