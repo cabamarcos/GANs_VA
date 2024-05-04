@@ -16,8 +16,8 @@ LEARNING_RATE = 2e-4  # could also use two lrs, one for gen and one for disc
 BATCH_SIZE = 128
 IMAGE_SIZE = 64
 CHANNELS_IMG = 3
-NOISE_DIM = 100
-NUM_EPOCHS = 5
+Z_DIM = 100
+NUM_EPOCHS = 10
 FEATURES_DISC = 64
 FEATURES_GEN = 64
 
@@ -39,7 +39,7 @@ transforms = transforms.Compose(
 # comment mnist above and uncomment below if train on CelebA
 dataset = datasets.ImageFolder(root="celeb_dataset", transform=transforms)
 dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
-gen = Generator(NOISE_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
+gen = Generator(Z_DIM, CHANNELS_IMG, FEATURES_GEN).to(device)
 disc = Discriminator(CHANNELS_IMG, FEATURES_DISC).to(device)
 initialize_weights(gen)
 initialize_weights(disc)
@@ -48,7 +48,7 @@ opt_gen = optim.Adam(gen.parameters(), lr=LEARNING_RATE, betas=(0.5, 0.999))
 opt_disc = optim.Adam(disc.parameters(), lr=LEARNING_RATE, betas=(0.5, 0.999))
 criterion = nn.BCELoss()
 
-fixed_noise = torch.randn(32, NOISE_DIM, 1, 1).to(device)
+fixed_noise = torch.randn(32, Z_DIM, 1, 1).to(device)
 writer_real = SummaryWriter(f"logs/real")
 writer_fake = SummaryWriter(f"logs/fake")
 step = 0
@@ -60,7 +60,7 @@ for epoch in range(NUM_EPOCHS):
     # Target labels not needed! <3 unsupervised
     for batch_idx, (real, _) in enumerate(dataloader):
         real = real.to(device)
-        noise = torch.randn(BATCH_SIZE, NOISE_DIM, 1, 1).to(device)
+        noise = torch.randn(BATCH_SIZE, Z_DIM, 1, 1).to(device)
         fake = gen(noise)
 
         ### Train Discriminator: max log(D(x)) + log(1 - D(G(z)))
