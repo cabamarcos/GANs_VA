@@ -59,3 +59,9 @@ I got results like this after 5 epochs:
 In this images you can clearly see some faces forming, I will let this model train for longer so we can get better results.
 
 After training for 25 epochs, the results don't get better, so I will try to use a different method
+
+I used a different method, using gradient penalty as shown in this [paper](https://arxiv.org/pdf/1704.00028). After trying somme experiments I got this arround epoch 20:
+
+![alt text](./Images/image_wgangp.png)
+
+In this images you can clearly see that they are converging into something.
