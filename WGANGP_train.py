@@ -54,8 +54,8 @@ opt_critic = optim.Adam(critic.parameters(), lr=LEARNING_RATE, betas=(0.0, 0.9))
 
 # for tensorboard plotting
 fixed_noise = torch.randn(32, Z_DIM, 1, 1).to(device)
-writer_real = SummaryWriter(f"logs/GAN_MNIST/real")
-writer_fake = SummaryWriter(f"logs/GAN_MNIST/fake")
+writer_real = SummaryWriter(f"logsWGANGP/real")
+writer_fake = SummaryWriter(f"logsWGANGP/fake")
 step = 0
 
 gen.train()
