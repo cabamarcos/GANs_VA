@@ -12,7 +12,7 @@ Then download the requirements:
 pip install requirements.txt
 ```
 
-You can download the famous dataset [here](https://www.kaggle.com/datasets/504743cb487a5aed565ce14238c6343b7d650ffd28c071f03f2fd9b25819e6c9)
+You can download CelebA dataset [here](https://www.kaggle.com/datasets/504743cb487a5aed565ce14238c6343b7d650ffd28c071f03f2fd9b25819e6c9)
 
 ## Fully connected
 First of all I created a simple fully connected PM which gave me results like this:
