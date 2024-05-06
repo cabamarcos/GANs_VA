@@ -12,14 +12,14 @@ from WGAN import Discriminator, Generator, initialize_weights
 
 # Hyperparameters etc.
 device = "cuda" if torch.cuda.is_available() else "cpu"
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 5e-5 #1e-4	both tested. 5e-5 is better
 BATCH_SIZE = 64
 IMAGE_SIZE = 64
 CHANNELS_IMG = 3
 Z_DIM = 100
-NUM_EPOCHS = 100
-FEATURES_CRITIC = 16
-FEATURES_GEN = 16
+NUM_EPOCHS = 25
+FEATURES_CRITIC = 64
+FEATURES_GEN = 64
 CRITIC_ITERATIONS = 5
 LAMBDA_GP = 10
 
@@ -54,8 +54,8 @@ opt_critic = optim.Adam(critic.parameters(), lr=LEARNING_RATE, betas=(0.0, 0.9))
 
 # for tensorboard plotting
 fixed_noise = torch.randn(32, Z_DIM, 1, 1).to(device)
-writer_real = SummaryWriter(f"logsWGANGP/real")
-writer_fake = SummaryWriter(f"logsWGANGP/fake")
+writer_real = SummaryWriter(f"logsWGANGP2/real")
+writer_fake = SummaryWriter(f"logsWGANGP2/fake")
 step = 0
 
 gen.train()
