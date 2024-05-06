@@ -64,4 +64,4 @@ I used a different method, using gradient penalty as shown in this [paper](https
 
 ![alt text](./Images/image_wgangp.png)
 
-In this images you can clearly see that they are converging into something.
+In this images you can clearly see that they are converging into something, but after some epochs seeing it wasn't converging at all, I decided to lower the lr ftom 1x10^-4 to 5x10^-5. Whoich results will be posted here:
