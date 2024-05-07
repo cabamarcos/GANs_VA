@@ -44,9 +44,9 @@ After 15 epoch, the images don't look better. In fact, some of the pixels start 
 
 ### CelebA dataset
 
-After training for 20-25 epochs, results look like this:
+After training for 20 epochs, results look like this:
 
-![Alt text](Images/DCGAN_celeb.png)
+![alt text](Images/DCGAN_celeb.png)
 
 ## WGAN
 
