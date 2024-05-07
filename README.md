@@ -32,7 +32,7 @@ I then searched for information that could help me to create a DCGAN, which is t
 
 ![alt text](Images/dcgan_generator.png)
 
-I found the [paper](https://arxiv.org/abs/1511.06434) that explains how to make it and some experiments.
+I found the [paper](https://arxiv.org/pdf/1511.06434) that explains how to make it and some experiments.
 
 After reading and understanding it I created the [document](./DCGAN.py) that contains the generator and the discriminator.
 
