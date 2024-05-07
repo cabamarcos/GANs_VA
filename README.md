@@ -44,7 +44,9 @@ After 15 epoch, the images don't look better. In fact, some of the pixels start 
 
 ### CelebA dataset
 
-Afer trying numerous times generating images of people I kept failing. I don't know why I kept failing so I decided to try other implementations or other ways of training.
+After training for 20-25 epochs, results look like this:
+
+![Alt text](Images/DCGAN_celeb.png)
 
 ## WGAN
 
