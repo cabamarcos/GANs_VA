@@ -9,7 +9,7 @@ git clone https://github.com/cabamarcos/GANs_VA.git
 Then download the requirements:
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 You can download CelebA dataset [here](https://www.kaggle.com/datasets/504743cb487a5aed565ce14238c6343b7d650ffd28c071f03f2fd9b25819e6c9)
