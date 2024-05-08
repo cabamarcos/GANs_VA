@@ -7,7 +7,6 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-from utils import gradient_penalty
 from WGAN import Discriminator, Generator, initialize_weights
 
 # Hyperparameters etc.
