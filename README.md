@@ -62,6 +62,10 @@ In this images you can clearly see some faces forming, I will let this model tra
 
 After training for 5 epochs, the images generated look like this:
 
+![alt text](./Images/image_wgan2.png)
+
+It doesn't get much better after more epochs.
+
 ## WGANGP
 
 I used a different method, using gradient penalty as shown in this [paper](https://arxiv.org/pdf/1704.00028). After trying somme experiments I got this arround epoch 20:
