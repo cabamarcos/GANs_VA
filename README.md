@@ -54,13 +54,13 @@ I found another [paper](https://arxiv.org/pdf/1701.07875) which explained the im
 
 It basicly trains the discriminator 5 more times than the generator. 
 
-I got results like this after 5 epochs:
+I got results like this after 2 epochs:
 
 ![alt text](./Images/image_wgan.png)
 
 In this images you can clearly see some faces forming, I will let this model train for longer so we can get better results.
 
-After training for 25 epochs, the results don't get better, so I will try to use a different method
+After training for 5 epochs, the images generated look like this:
 
 ## WGANGP
 
