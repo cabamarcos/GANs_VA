@@ -73,3 +73,6 @@ I used a different method, using gradient penalty as shown in this [paper](https
 ![alt text](./Images/image_wgangp.png)
 
 In this images you can clearly see that they are converging into something, but I feel DCGAN generates better results
+
+
+TODO: Find other gans to try experiments
